@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import signeduser from '../utils/signedIn';
+import { useNavigate, Link } from "react-router-dom";
+
 const Plog = () => {
   const [modal, setModal] = useState(false);
   const [patient_adhaar,setAdhaar] = useState("");
   const [otp,setOtp] = useState("");
+  const navigate = useNavigate();
   const toggleDown = () => {
     setModal(!modal);
   };
@@ -39,9 +42,9 @@ const Plog = () => {
         },
         body: JSON.stringify(new_dict1),
       });
-      
-      signeduser.adhaar = patient_adhaar;
-      Object.freeze(signeduser);
+      navigate("/phome");
+      // signeduser.adhaar = patient_adhaar;
+      // Object.freeze(signeduser);
 
     }
     else{

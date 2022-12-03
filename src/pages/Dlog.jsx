@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-
+import { useNavigate, Link } from "react-router-dom";
 const Dlog = () => {
   const [modal, setModal] = useState(false);
   const [doc_id,setDocid] = useState("");
+  const navigate = useNavigate();
   const [otp,setOtp] = useState("");
   const toggleDown = () => {
     setModal(!modal);
@@ -39,6 +40,7 @@ const Dlog = () => {
         },
         body: JSON.stringify(new_dict1),
       });
+      navigate("/dhome");
     }
     else{
       console.log("Invalid OTP")

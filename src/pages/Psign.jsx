@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Web3 from "web3";
+import { useNavigate, Link } from "react-router-dom";
 const Psign = () => {
   const [modal, setModal] = useState(false);
   const [patient_adhaar, setPatad] = useState("");
@@ -12,6 +13,7 @@ const Psign = () => {
   const [meds, setMeds] = useState("");
   const [emnum ,setEmnum] = useState("");
   const [weight ,setWeight] = useState("");
+  const navigate = useNavigate();
   const toggleDown = () => {
     setModal(!modal);
   };
@@ -51,6 +53,7 @@ const Psign = () => {
         body: JSON.stringify(dict2),
       });
       console.log(response.json);
+      navigate("/phome");
     }catch (err) {
       console.log(err);
     }

@@ -1,7 +1,9 @@
 import React from "react";
 import Web3 from "web3";
+import { useNavigate, Link } from "react-router-dom";
 
 const Dsign = () => {
+  const navigate = useNavigate();
   const handleSign=async(e)=>{
     e.preventDefault();
     const doc_name = e.target[0].value;
@@ -38,6 +40,7 @@ const Dsign = () => {
         body: JSON.stringify(dict),
       });
       console.log(response.json);
+      navigate("/dhome");
     }catch (err) {
       console.log(err);
     }

@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   return (
     <div className="sign">
       <div className="container">
@@ -9,15 +11,15 @@ const Signup = () => {
           <div className="one">
             <button className="signup">Sign Up</button>
             <div className="hov">
-              <span>Doctor</span>
-              <span>Patient</span>
+              <Link to="/dsign"><span>Doctor</span></Link>
+              <Link to="/psign"><span>Patient</span></Link>
             </div>
           </div>
           <div className="two">
             <button className="login">Login</button>
             <div className="hov">
-              <span>Doctor</span>
-              <span>Patient</span>
+              <Link to="/dlog"><span>Doctor</span></Link>
+              <Link to="/plog"><span>Patient</span></Link>
             </div>
           </div>
         </div>

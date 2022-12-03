@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { parts } from "../utils/parts";
 import signeduser from '../utils/signedIn';
+import signeddoc from "../utils/signedInd";
 const Phome = () => {
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
@@ -28,11 +29,12 @@ const Phome = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(dict1),
-      }).then((response)=>{
-        response.json();
-      }).then((res)=>{
+      }).then((response)=>
+        response.json()
+      ).then((res)=>{
         setListall(res);
-      })  
+        console.log(res);
+      })
       }, []);
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -62,10 +64,48 @@ const Phome = () => {
       setUser(res.File);
       setLoading(false);
   };
-  const toggle2 = () => {
+  const toggle2 = async() => {
+    console.log(checkedState)
     setModal2(!modal2);
-    console.log(listall);
+    let new_list=[];
+    Object.keys(listall).forEach(function(key, index) {
+      new_list.push(listall[key]);
+    });
+    console.log(new_list);
+    setListall(new_list)    
+    setList(new_list);
+    setLoading2(false);
   };
+  const applyFilter=async()=>{
+    let final_list=[];
+    setLoading2(true);
+    for(var i=0;i<listall.length;i++){
+      if(listall[i].category=="ENT" && checkedState[0]){
+        final_list.push(listall[i]);
+      }
+      else if(listall[i].category=="Orthopedic" && checkedState[1]){
+        final_list.push(listall[i]);
+      }
+      else if(listall[i].category=="Reproductive" && checkedState[2]){
+        final_list.push(listall[i]);
+      }
+      else if(listall[i].category=="Respiratory" && checkedState[3]){
+        final_list.push(listall[i]);
+      }
+      else if(listall[i].category=="Cardiological" && checkedState[4]){
+        final_list.push(listall[i]);
+      }
+      else if(listall[i].category=="Infections" && checkedState[5]){
+        final_list.push(listall[i]);
+      }
+      else if(listall[i].category=="Neurological" && checkedState[6]){
+        final_list.push(listall[i]);
+      }
+    }
+    setList(final_list);
+    console.log(final_list);
+    setLoading2(false);
+  }
   return (
     <div className="phome">
       {modal1 && (
@@ -107,56 +147,56 @@ const Phome = () => {
                 })}
               </div>
               <div className="btn">
-                <button>Proceed</button>
+                <button onClick={applyFilter}>Apply</button>
               </div>
             </div>
-            <div className="doc">
+            {!loading2 && list.map((meds) => {
+            return (
+              <div className="doc">
               <div className="horow">
                   <span>Doctor ID</span>
                   <div className="text">
-                    <p>fs</p>
+                    <p>{meds.doc_id}</p>
                   </div>
               </div>
               <div className="horow">
                   <span>Patient Aadhar</span>
                   <div className="text">
-                    <p>fs</p>
+                    <p>{meds.patient_id}</p>
                   </div>
               </div>
               <div className="horow">
                   <span>Hospital ID</span>
                   <div className="text">
-                    <p>fs</p>
+                    <p>{meds.issue_center}</p>
                   </div>
               </div>
               <div className="horow">
                   <span>Anatomy Category</span>
                   <div className="text">
-                    <p>fs</p>
+                    <p>{meds.category}</p>
                   </div>
               </div>
               <div className="horow">
                   <span>Summary</span>
                   <div className="text2">
-                    <p>fs</p>
+                    <p>{meds.summary}</p>
                   </div>
               </div>
               <div className="horow">
                   <span>Prescription</span>
                   <div className="text2">
-                    <p>fs</p>
+                    <p>{meds.prescription}</p>
                   </div>
               </div>
             </div>
-            <div className="doc"></div>
-            <div className="doc"></div>
-            <div className="doc"></div>
-            <div className="doc"></div>
+            );
+          })}
           </div>
         </div>
       )}
       <div className="container">
-        <span>Welcome Feynman</span>
+        <span>Welcome, {signeduser.name}</span>
         <div className="buttons">
           <div className="all" onClick={toggle1}>
             Basic Health Records

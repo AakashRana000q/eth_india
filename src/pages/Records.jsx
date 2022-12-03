@@ -13,6 +13,9 @@ const Records = () => {
         "doc_id":docid,
         "issue_center":hopid,
         "file":{
+            "patient_id":patad,
+            "doc_id":docid,
+            "issue_center":hopid,
             "category":cat,
             "summary":sum,
             "prescription":pres,
