@@ -36,14 +36,53 @@ def str2hex(str):
     return "0x" + str.encode("utf-8").hex()
 
 
+def convert_to_dict(inp):
+    i=0
+    while i<(len(inp)-1):
+        if(inp[i]=='{'):
+            ip=inp[0:i+1]+"\""+inp[i+1:]
+            inp=ip
+            i+=1
+        elif (inp[i]==':'and not(inp[i-1]=="\"")):
+            ip=inp[0:i]+"\""+inp[i:]
+            i+=1
+            inp=ip
+        elif (inp[i]==" " and not(inp[i+1]=='{')):
+            ip=inp[0:i+1]+"\""+inp[i+1:]
+            i+=1
+            inp=ip
+        elif(inp[i]=="," ):
+            ip=inp[0:i]+"\""+inp[i:]
+            i+=1
+            inp=ip
+        elif(inp[i]=="}" and not(inp[i-1]=="}") ):
+            ip=inp[0:i]+"\""+inp[i:]
+            i+=1
+            inp=ip
+        i+=1
+    return inp
+
+def handel_spaces(inp,c):
+    i=0
+    while(i<len(inp)):
+        if inp[i]==c:
+            inp[i]=' '
+    return inp
+
 def handle_advance(data):
     logger.info(f"Received advance request data {data}")
     logger.info("Adding notice")
     input=hex2str(data["payload"])
     input = json.dumps(input)
+    input = json.loads(convert_to_dict(input))
+    try:
+        input['file']=handel_spaces(input['file'],'#')
+    except:
+        pass
     print("******************INput is ",input)
     print("Type input is ",type(input))
-    req_function='get_file/'
+    req_function=input["function"]
+    input = json.dumps(input)
     response1 = requests.post(request_url+req_function, input)
     output=str(response1.text)
     print("Final OUt is ",output)
