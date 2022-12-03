@@ -17,6 +17,8 @@ function App() {
           <Route path="psign" element={<Psign />} />
           <Route path="dlog" element={<Dlog />} />
           <Route path="plog" element={<Plog />} />
+          <Route path="Phome" element={<Phome />} />
+          <Route path="Dhome" element={<Dhome />} />
         </Route>
       </Routes>
     </BrowserRouter>
