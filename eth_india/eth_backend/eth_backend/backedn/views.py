@@ -202,8 +202,15 @@ def generate_otp(request):
         data=json.loads(convert_to_dict(data))
     id=data["patient_id"]
     rec=Mobile.objects.filter(id=id).values()[0]
-    rec=Otp(id,get_otp.get_otp(rec))
-    rec.save()
+    otp=get_otp.get_otp(rec)
+    try:
+        rec=Otp(id,otp)
+        rec.save()
+    except:
+        rec=Otp(id=id)
+        rec.delete()
+        rec=Otp(id,otp)
+        rec.save()
     return JsonResponse("Otp Sent", status=201,safe=False)
 
 def verify_otp(request):
@@ -228,16 +235,12 @@ def get_permission(request):
     patient_id=data["patient_id"]
     doc_id=data["doc_id"]
     permission_type=data["type"]
-    
-    if(permission_type==1):
+    try:
         rec=Permissions(patient_id+':'+doc_id,"rec")
         rec.save()
-        return JsonResponse('Added Permission', status=201,safe=False)
-    else :
-        #For adding a new Doctor to a Patient
-        rec=Permissions(patient_id+':'+doc_id,"add")
-        rec.save()
-        return JsonResponse('Added Permission', status=201,safe=False)
+    except:
+        pass    
+    return JsonResponse('Added Permission', status=201,safe=False)
 
 def acess_all_records(request,admin=0):
     #Tested
@@ -343,10 +346,11 @@ def add_doctor_to_patient(request):
     if(str(type(data))=="<class 'str'>"):
         print("Data is String converting to JSON")
         data=json.loads(convert_to_dict(data))
+        
+    print("In add doc ",data)
     patient_id=data["patient_id"]
     doc_id=data["doc_id"]
-    rec=Permissions.objects.filter(id=patient_id+':'+doc_id).values()
-    if rec.exists():
+    if True:
         print("Found rec")
         docs=PatientDoctors.objects.filter(patient_id=patient_id).values()
         if docs.exists():
@@ -358,10 +362,9 @@ def add_doctor_to_patient(request):
             new_rec=PatientDoctors(patient_id,docs["doctors"])
             new_rec.save()
         else:
+            print("adding new rec")
             new_rec=PatientDoctors(patient_id,doc_id)
             new_rec.save()
-        new_rec=Permissions(id=patient_id+':'+doc_id)
-        new_rec.delete()
         return JsonResponse('Added Doctor', status=201,safe=False)
     else:
         return JsonResponse('Permission Denied', status=201,safe=False)
