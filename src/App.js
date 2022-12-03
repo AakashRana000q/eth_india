@@ -4,6 +4,9 @@ import Dsign from "./pages/Dsign";
 import Psign from "./pages/Psign";
 import Dlog from "./pages/Dlog";
 import Plog from "./pages/Plog";
+import Phome from "./pages/Phome";
+import Dhome from "./pages/Dhome";
+
 
 import "./style.scss";
 
