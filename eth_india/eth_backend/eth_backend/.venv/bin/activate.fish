@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/saksham/Desktop/ETH/eth_backend/eth_backend/.venv"
+set -gx VIRTUAL_ENV "/home/saksham/Desktop/rollups-examples/eth_india/eth_backend/eth_backend/.venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

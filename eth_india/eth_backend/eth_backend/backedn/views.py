@@ -279,6 +279,7 @@ def acess_all_records(request,admin=0):
         if admin==0:
             return JsonResponse({"Files":result}, status=201,safe=False)
         else :
+            print("Came here result is ************************************* ",result)
             return result
     else:
         if admin==0:
@@ -329,6 +330,7 @@ def add_doctor_to_patient(request):
     print("In add doc ",data)
     patient_id=data["patient_id"]
     doc_id=data["doc_id"]
+    print("adding ********************* ",doc_id)
     if True:
         print("Found rec")
         docs=PatientDoctors.objects.filter(patient_id=patient_id).values()
@@ -338,6 +340,8 @@ def add_doctor_to_patient(request):
                 return JsonResponse('Doc Allready Exists', status=201,safe=False)
 
             docs["doctors"]+=(":"+doc_id)
+            new_rec=PatientDoctors(patient_id=patient_id)
+            new_rec.delete()
             new_rec=PatientDoctors(patient_id,docs["doctors"])
             new_rec.save()
         else:
@@ -368,7 +372,7 @@ def add_record(request):
         if record.exists():
             print("Find previous Records")
             record=record[0]
-            record["records"]+=(":"+file_id)
+            record["records"]+=(":"+file_id[0:file_id.find('.')])
             rec=Records(record_id,record["records"])
             rec.save()
         else:
@@ -413,7 +417,10 @@ def emergency(request):
     else:
         print("Patient Acessing his information")
         pass
-    return JsonResponse(acess_all_records(req,admin=1), status=201,safe=False)
+    print("In Records ''''''''' ")
+    records=acess_all_records(req,1)
+    print("Final Records = ",records)
+    return JsonResponse(records, status=201,safe=False)
     
 def get_basic_record(request):
     data = json.loads(request.body.decode("utf-8"))
@@ -454,4 +461,4 @@ def acess_self_records(request):
                 result[fl]=json_response
     except:
         print("No Records Found")     
-    JsonResponse({"Files":result}, status=201,safe=False)
+    return JsonResponse({"Files":result}, status=201,safe=False)

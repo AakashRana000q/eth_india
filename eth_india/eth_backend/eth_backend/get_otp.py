@@ -2,7 +2,7 @@ import twilio
 from twilio.rest import Client
 import random # generate random number
 account_sid = 'AC413962c0a3affbc8a0d2e58750d6392a'
-auth_token = '9f566056270659536ae7afd5bf5556fc'
+auth_token = 'a7978ebdf8cce6275f7acda64f6fd3b6'
     
 def get_otp(request):
     otp = random.randint(1000,9999)
