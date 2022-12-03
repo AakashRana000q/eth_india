@@ -33,7 +33,6 @@ def add_patient(request):
     if(str(type(data))=="<class 'str'>"):
         print("Data is String converting to JSON")
         data=json.loads(convert_to_dict(data))
-    
     try:
         patient=Patient(data['patient_adhaar'],data['patient_name'],data['patient_adhaar']
                     ,data['patient_wallet'],data['issue_center'])
@@ -67,8 +66,12 @@ def add_doctor(request):
     except:
         print("Doc allready Exists ")
         JsonResponse("Doc allready Exists ", status=201,safe=False)
-    mob=Mobile(data['doc_id'],data['doc_name'],data['number'])
-    mob.save()    
+    try:
+        mob=Mobile(data['doc_id'],data['doc_name'],data['number'])
+        mob.save()
+    except:
+        return JsonResponse('Doc Number Exists', status=201,safe=False)
+
     return JsonResponse('True', status=201,safe=False)
 
 def give_file(file_hash):
@@ -93,53 +96,30 @@ def update_record(request):
         file_id=handel_file(json_object,id=file_id)
         file_hash=mn.upload_file(file_id,doc_id)
         return JsonResponse('True', status=201,safe=False)
-    
     else :
         return JsonResponse('Flase', status=201,safe=False)
 
 def convert_to_dict(inp):
     i=0
     while i<(len(inp)-1):
-        # if i>=100:
-        #     return inp
         if(inp[i]=='{'):
-            # print("Found at 1 i = ",i)
-            # print("P1 = ",inp[0:i+1])
-            # print("P2 = ",inp[i+1:])
             ip=inp[0:i+1]+"\""+inp[i+1:]
-            # print("Final Result = ************ = ",ip)
             inp=ip
             i+=1
         elif (inp[i]==':'and not(inp[i-1]=="\"")):
-            print("Found at 2 i = ",i)
-            print("P1 = ",inp[0:i])
-            print("P2 = ",inp[i:])
             ip=inp[0:i]+"\""+inp[i:]
-            print("Final Result = ************ = ",ip)
             i+=1
             inp=ip
         elif (inp[i]==" " and not(inp[i+1]=='{')):
-            # print("Found at i 3 = ",i)
-            # print("P1 = ",inp[0:i+1])
-            # print("P2 = ",inp[i+1:])
             ip=inp[0:i+1]+"\""+inp[i+1:]
-            # print("Final Result = ************ = ",ip)
             i+=1
             inp=ip
         elif(inp[i]=="," ):
-            # print("Found at i 4 = ",i)
-            # print("P1 = ",inp[0:i])
-            # print("P2 = ",inp[i:])
             ip=inp[0:i]+"\""+inp[i:]
-            # print("Final Result = ************ = ",ip)
             i+=1
             inp=ip
         elif(inp[i]=="}" and not(inp[i-1]=="}") ):
-            # print("Found at i 5 = ",i)
-            # print("P1 = ",inp[0:i])
-            # print("P2 = ",inp[i:])
             ip=inp[0:i]+"\""+inp[i:]
-            # print("Final Result = ************ = ",ip)
             i+=1
             inp=ip
         i+=1
@@ -234,7 +214,6 @@ def get_permission(request):
         data=json.loads(convert_to_dict(data))
     patient_id=data["patient_id"]
     doc_id=data["doc_id"]
-    permission_type=data["type"]
     try:
         rec=Permissions(patient_id+':'+doc_id,"rec")
         rec.save()
@@ -366,8 +345,6 @@ def add_doctor_to_patient(request):
             new_rec=PatientDoctors(patient_id,doc_id)
             new_rec.save()
         return JsonResponse('Added Doctor', status=201,safe=False)
-    else:
-        return JsonResponse('Permission Denied', status=201,safe=False)
         
     
 def add_record(request):
@@ -402,7 +379,7 @@ def add_record(request):
         fle.save()
         print("Saved file")
     else:
-        return JsonResponse('Doctor not added to patient', status=201,safe=False)
+        return JsonResponse({"Status":"Not Created","Error":"Doctor not added to patient"}, status=201,safe=False)
     return JsonResponse({"Status":"Created","file_id":file_id[0:file_id.find('.')]}, status=201,safe=False)
 
 def emergency(request):
@@ -436,7 +413,7 @@ def emergency(request):
     else:
         print("Patient Acessing his information")
         pass
-    return JsonResponse({"Files":acess_all_records(req,admin=1)}, status=201,safe=False)
+    return JsonResponse(acess_all_records(req,admin=1), status=201,safe=False)
     
 def get_basic_record(request):
     data = json.loads(request.body.decode("utf-8"))
