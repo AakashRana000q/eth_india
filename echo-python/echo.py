@@ -91,6 +91,15 @@ def make_request(input,req_function):
     logger.info(f"Received notice status {response.status_code} body {response.content}")
     return response1.json,"accept"
 
+
+def handel_file(json_object,id=0):
+    #Tested 
+    id+='.json'
+    with open("files/"+id, "w") as outfile:
+        outfile.write(json_object)
+    return id
+
+
 def handle_advance(data):
     logger.info(f"Received advance request data {data}")
     logger.info("Adding notice")
@@ -112,21 +121,33 @@ def handle_advance(data):
             response = requests.post(rollup_server + "/notice", json=notice)
             logger.info(f"Received notice status {response.status_code} body {response.content}")
             return "accept"
+        elif req_function==file_functions[3]:
+            res=make_request(input,req_function)
+            file_id=res[0]['file_id']
+            file=input['file']
+            json_object = json.dumps(file)
+            handel_file(json_object,id=file_id)
+            return "accept"
         elif req_function==file_functions[1]:
             res=make_request(input,req_function)
-            file_id=res['file_id']
+            file=input['file']
+            json_object = json.dumps(file)
+            handel_file(json_object,id="basic_record"+input['patient_id'])
+            return "accept"
         elif req_function==file_functions[2]:
             pass
-        elif req_function==file_functions[3]:
-            pass
         elif req_function==file_functions[4]:
-            pass
+            res=make_request(input,req_function)
+            return "accept"
         elif req_function==file_functions[5]:
-            pass
+            res=make_request(input,req_function)
+            return "accept"
         elif req_function==file_functions[6]:
-            pass
+            res=make_request(input,req_function)
+            return "accept"
         elif req_function==file_functions[7]:
-            pass 
+            res=make_request(input,req_function)
+            return "accept" 
     input = json.dumps(input)
     response1 = requests.post(request_url+req_function, input)
     output=str(response1.text)
