@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import signeduser from '../utils/signedIn';
 const Plog = () => {
   const [modal, setModal] = useState(false);
   const [patient_adhaar,setAdhaar] = useState("");
@@ -39,6 +39,10 @@ const Plog = () => {
         },
         body: JSON.stringify(new_dict1),
       });
+      
+      signeduser.adhaar = patient_adhaar;
+      Object.freeze(signeduser);
+
     }
     else{
       console.log("Invalid OTP")
