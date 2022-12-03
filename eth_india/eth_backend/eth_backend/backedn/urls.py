@@ -19,4 +19,5 @@ urlpatterns = [
     path('generate_otp/',csrf_exempt(views.generate_otp)),
     path('verify_otp/',csrf_exempt(views.verify_otp)),
     path('get_basic_record/',csrf_exempt(views.get_basic_record)),
+    path('get_patient_records/',csrf_exempt(views.acess_self_records)),
 ]

@@ -30,6 +30,9 @@ def handel_file(json_object,id=0):
 def add_patient(request):
     #Tested
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     
     try:
         patient=Patient(data['patient_adhaar'],data['patient_name'],data['patient_adhaar']
@@ -53,6 +56,9 @@ def add_patient(request):
 def add_doctor(request):
     #Tested
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     doctor=Doctor(data['doc_id'],data['doc_name'],data['doc_adhaar']
                   ,data['doc_wallet'],data['issue_center'])
     try:
@@ -73,6 +79,9 @@ def give_file(file_hash):
 
 def update_record(request):
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     patient_id=data["patient_id"]
     doc_id=data["doc_id"]
     file_id=data["file_id"]
@@ -188,6 +197,9 @@ def is_file_of_correct_doc(doc_id,file_id,patient_id):
 def generate_otp(request):
     #Tested
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     id=data["patient_id"]
     rec=Mobile.objects.filter(id=id).values()[0]
     rec=Otp(id,get_otp.get_otp(rec))
@@ -210,6 +222,9 @@ def verify_otp(request):
 def get_permission(request):
     #Tested
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     patient_id=data["patient_id"]
     doc_id=data["doc_id"]
     permission_type=data["type"]
@@ -231,6 +246,9 @@ def acess_all_records(request,admin=0):
         data = json.loads(request.body.decode("utf-8"))
     else :
         data=request
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
         
     patient_id=data["patient_id"]
     doc_id=data["doc_id"]
@@ -284,6 +302,9 @@ def acess_all_records(request,admin=0):
 
 def sign_in(request):
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     id=data['id']
     try:
         rec=Login(id,"True")
@@ -296,6 +317,9 @@ def sign_in(request):
 
 def check_sign_in(request):
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     id=data['id']
     sign_in_status='False'
     try:
@@ -311,6 +335,9 @@ def check_sign_in(request):
 def add_doctor_to_patient(request):
     #Tested
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     patient_id=data["patient_id"]
     doc_id=data["doc_id"]
     rec=Permissions.objects.filter(id=patient_id+':'+doc_id).values()
@@ -338,6 +365,9 @@ def add_doctor_to_patient(request):
 def add_record(request):
     #Tested
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     doc_id=data['doc_id']
     patient_id=data['patient_id']
     record_id=patient_id+':'+doc_id
@@ -370,6 +400,9 @@ def add_record(request):
 def emergency(request):
     #Can be used for 2 purpose use doc_id==patient_id to acess all records of patient without logging the acess
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     patient_id=data["patient_id"]
     doc_id=data["doc_id"]
     id=patient_id+":"+doc_id
@@ -399,4 +432,41 @@ def emergency(request):
     
 def get_basic_record(request):
     data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
     return JsonResponse({"File":give_file("basic_record"+data['patient_id'])}, status=201,safe=False)
+
+
+def acess_self_records(request):
+    data = json.loads(request.body.decode("utf-8"))
+    if(str(type(data))=="<class 'str'>"):
+        print("Data is String converting to JSON")
+        data=json.loads(convert_to_dict(data))
+    doc_id=data['doc_id']
+    patient_id=data['patient_id']
+    record_id=patient_id+':'+doc_id
+    result={}
+    try:
+        rec=Records.objects.filter(record_id=record_id).values()[0]["records"]
+        files=rec.split(':')
+        for fl in files:
+            req={}
+            req['patient_id']=patient_id
+            req['doc_id']=doc_id
+            req['file_id']=fl
+            json_response={}
+            try: 
+                print("Request is ",req)
+                json_response = get_file(req,2)
+                print("Got Response as ",json_response)
+            except:
+                print("Error in extracting file id : ",fl)
+                continue
+            if (json_response=="Error"):
+                continue        
+            else:
+                result[fl]=json_response
+    except:
+        print("No Records Found")     
+    JsonResponse({"Files":result}, status=201,safe=False)
