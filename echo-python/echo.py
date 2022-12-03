@@ -16,6 +16,7 @@ import requests
 import json
 
 
+file_functions=['get_basic_record/','newpatient/','update/','addrecord/','emergency/','get_file/','get_all_file/','get_patient_records/']
 request_url='http://127.0.0.1:8000/'
 logging.basicConfig(level="INFO")
 logger = logging.getLogger(__name__)
@@ -69,6 +70,27 @@ def handel_spaces(inp,c):
             inp[i]=' '
     return inp
 
+def give_file(file_id):
+    f = open('files/'+file_id+'.json')
+    data = json.load(f)
+    return data
+
+def get_files(file_list):
+    result={}
+    for fl in file_list:
+        result[fl]=give_file(fl)
+    return result
+
+def make_request(input,req_function):
+    input = json.dumps(input)
+    response1 = requests.post(request_url+req_function, input)
+    output=str(response1.text)
+    print("Final OUt is ",output)
+    notice = {"payload": str2hex(output)}
+    response = requests.post(rollup_server + "/notice", json=notice)
+    logger.info(f"Received notice status {response.status_code} body {response.content}")
+    return response1.json,"accept"
+
 def handle_advance(data):
     logger.info(f"Received advance request data {data}")
     logger.info("Adding notice")
@@ -82,6 +104,29 @@ def handle_advance(data):
     print("******************INput is ",input)
     print("Type input is ",type(input))
     req_function=input["function"]
+    if(req_function in file_functions):
+        if req_function==file_functions[0]:
+            output=str(get_files([input['patient_id']]))
+            print("Final OUt is ",output)
+            notice = {"payload": str2hex(output)}
+            response = requests.post(rollup_server + "/notice", json=notice)
+            logger.info(f"Received notice status {response.status_code} body {response.content}")
+            return "accept"
+        elif req_function==file_functions[1]:
+            res=make_request(input,req_function)
+            file_id=res['file_id']
+        elif req_function==file_functions[2]:
+            pass
+        elif req_function==file_functions[3]:
+            pass
+        elif req_function==file_functions[4]:
+            pass
+        elif req_function==file_functions[5]:
+            pass
+        elif req_function==file_functions[6]:
+            pass
+        elif req_function==file_functions[7]:
+            pass 
     input = json.dumps(input)
     response1 = requests.post(request_url+req_function, input)
     output=str(response1.text)
