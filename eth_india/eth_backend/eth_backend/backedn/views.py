@@ -256,39 +256,44 @@ def acess_all_records(request,admin=0):
     rec=Permissions.objects.filter(id=patient_id+':'+doc_id).values()
     if admin==1 or rec.exists():
         print("Found Permission")
-        doc_ids=PatientDoctors.objects.filter(patient_id=patient_id).values()[0]['doctors'].split(':')
-        for doc in doc_ids:
-            print("Found doctor name ",doc)
-            files=Records.objects.filter(record_id=patient_id+":"+doc).values()
-            print("Files query set ",files)
-            if not files.exists():
-                continue
+        try:
+            doc_ids=PatientDoctors.objects.filter(patient_id=patient_id).values()[0]['doctors'].split(':')
+            for doc in doc_ids:
+                print("Found doctor name ",doc)
+                files=Records.objects.filter(record_id=patient_id+":"+doc).values()
+                print("Files query set ",files)
+                if not files.exists():
+                    continue
+                else :
+                    
+                    files=files[0]['records'].split(':')
+                    print("Filers are ",files)
+                    for fl in files:
+                        print("Found file name ",fl)
+                        req={}
+                        req['patient_id']=patient_id
+                        req['doc_id']=doc_id
+                        req['file_id']=fl
+                        json_response={}
+                        try:
+                            
+                            print("Request is ",req)
+                            json_response = get_file(req,2)
+                            print("Got Response as ",json_response)
+                        except:
+                            print("Error in extracting file id : ",fl)
+                            continue
+                        if (json_response=="Error"):
+                            continue        
+                        else:
+                            result[fl]=json_response
+            rec=Permissions(patient_id+":"+doc)
+            rec.delete()
+        except:
+            if admin==0:
+                return JsonResponse({"Files":'No Records'}, status=201,safe=False)
             else :
-                
-                files=files[0]['records'].split(':')
-                print("Filers are ",files)
-                for fl in files:
-                    print("Found file name ",fl)
-                    req={}
-                    req['patient_id']=patient_id
-                    req['doc_id']=doc_id
-                    req['file_id']=fl
-                    json_response={}
-                    try:
-                        
-                        print("Request is ",req)
-                        json_response = get_file(req,2)
-                        print("Got Response as ",json_response)
-                    except:
-                        print("Error in extracting file id : ",fl)
-                        continue
-                    if (json_response=="Error"):
-                        continue        
-                    else:
-                        result[fl]=json_response
-        rec=Permissions(patient_id+":"+doc)
-        rec.delete()
-        
+                return "No Records"
         if admin==0:
             return JsonResponse({"Files":result}, status=201,safe=False)
         else :
@@ -395,7 +400,7 @@ def add_record(request):
         print("Saved file")
     else:
         return JsonResponse('Doctor not added to patient', status=201,safe=False)
-    return JsonResponse('True', status=201,safe=False)
+    return JsonResponse({"Status":"Created","file_id":file_id[0:file_id.find('.')]}, status=201,safe=False)
 
 def emergency(request):
     #Can be used for 2 purpose use doc_id==patient_id to acess all records of patient without logging the acess
