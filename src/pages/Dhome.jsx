@@ -58,7 +58,7 @@ const Dhome = () => {
       "function":"generate_otp/"
     }
     try{
-    const response = await fetch('http://127.0.0.1:8000/generate_otp/', {
+    const response = await fetch(`${process.env.REACT_APP_URL}${dict.function}`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'same-origin',
@@ -77,7 +77,7 @@ const Dhome = () => {
       "otp":otp,
       "function":"verify_otp/"
     }
-    const response1 = await fetch('http://127.0.0.1:8000/verify_otp/', {
+    const response1 = await fetch(`${process.env.REACT_APP_URL}${new_dict.function}`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'same-origin',
@@ -94,7 +94,7 @@ const Dhome = () => {
         "doc_id":signeddoc.id,
         "function":"add_doc/"
       }
-      const response1 = await fetch('http://127.0.0.1:8000/add_doc/', {
+      const response1 = await fetch(`${process.env.REACT_APP_URL}${new_dict.function}`, {
           method: 'POST',
           mode: 'cors',
           credentials: 'same-origin',
@@ -115,7 +115,7 @@ const Dhome = () => {
       "otp":otp,
       "function":"verify_otp/"
     }
-    const response1 = await fetch('http://127.0.0.1:8000/verify_otp/', {
+    const response1 = await fetch(`${process.env.REACT_APP_URL}${new_dict.function}`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'same-origin',
@@ -156,7 +156,7 @@ const Dhome = () => {
       "function":"emergency/",
     }
     let rese;
-    await fetch('http://127.0.0.1:8000/emergency/', {
+    await fetch(`${process.env.REACT_APP_URL}${dict1.function}`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'same-origin',
@@ -193,7 +193,7 @@ const Dhome = () => {
       "function":"get_patient_records/",
     }
     let rese;
-    await fetch('http://127.0.0.1:8000/get_patient_records/', {
+    await fetch(`${process.env.REACT_APP_URL}${dict1.function}`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'same-origin',

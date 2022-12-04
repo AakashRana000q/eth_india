@@ -21,7 +21,7 @@ const Phome = () => {
       "date":"04/12/2022",
       "function":"emergency/",
     }
-    fetch('http://127.0.0.1:8000/emergency/', {
+    fetch(`${process.env.REACT_APP_URL}${dict1.function}`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'same-origin',
@@ -50,7 +50,7 @@ const Phome = () => {
       "patient_id":signeduser.adhaar,
       "function":"get_basic_record",
     }
-    const response = await fetch('http://127.0.0.1:8000/get_basic_record/', {
+    const response = await fetch(`${process.env.REACT_APP_URL}${dict.function}`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'same-origin',

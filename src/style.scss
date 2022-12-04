@@ -10,7 +10,7 @@ p{
   width: 1px;
 }
 .sign {
-  background: url("./img/backgr.png") no-repeat;
+  background: url("./img/backgro.png") no-repeat;
   background-attachment: fixed;
   background-size: cover;
   width: 100%;
@@ -23,7 +23,7 @@ p{
     width: 95%;
     background: transparent;
     border-radius: 12px;
-    backdrop-filter: blur(300px);
+    // backdrop-filter: blur(300px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,7 +31,7 @@ p{
     span {
       font-size: 50px;
       font-family: "Inter", sans-serif;
-      color: rgba(27, 80, 97, 0.968);
+      color: rgb(255, 255, 255);
       font-weight: 600;
     }
     .buttons {
@@ -139,7 +139,7 @@ p{
   }
 }
 .dsign {
-  background: url("./img/backgr.png") no-repeat;
+  background: url("./img/backgro.png") no-repeat;
   background-attachment: fixed;
   background-size: cover;
   width: 100%;
@@ -152,7 +152,7 @@ p{
     width: 95%;
     background: transparent;
     border-radius: 12px;
-    backdrop-filter: blur(300px);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -160,7 +160,7 @@ p{
     span {
       font-size: 50px;
       font-family: "Inter", sans-serif;
-      color: rgba(27, 80, 97, 0.968);
+      color: rgba(255, 255, 255, 0.968);
       font-weight: 600;
       margin-bottom: 80px;
     }
@@ -177,7 +177,7 @@ p{
         border-radius: 12px;
         border-bottom: 1px solid #a7bcff;
         &::placeholder {
-          color: rgb(175, 175, 175);
+          color: rgb(0, 0, 0);
         }
       }
       button {
@@ -198,7 +198,7 @@ p{
   }
 }
 .psign {
-  background: url("./img/backgr.png") no-repeat;
+  background: url("./img/backgro.png") no-repeat;
   background-attachment: fixed;
   background-size: cover;
   width: 100%;
@@ -226,7 +226,7 @@ p{
       left: 50%;
       transform: translate(-50%, -50%);
       line-height: 1.4;
-      background: rgb(141, 213, 226);
+      background:  #595aab;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       width: 600px;
@@ -237,7 +237,7 @@ p{
       align-items: center;
       span {
         margin-top: 20px;
-        color: rgba(27, 80, 97, 0.968);
+        color: rgba(255, 255, 255, 0.968);
         font-weight: 600;
         font-size: 24px;
       }
@@ -250,7 +250,7 @@ p{
         border-radius: 12px;
         border-bottom: 1px solid #a7bcff;
         &::placeholder {
-          color: rgb(175, 175, 175);
+          color: rgb(0, 0, 0);
         }
       }
       button {
@@ -274,7 +274,7 @@ p{
     width: 95%;
     background: transparent;
     border-radius: 12px;
-    backdrop-filter: blur(300px);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -282,7 +282,7 @@ p{
     span {
       font-size: 50px;
       font-family: "Inter", sans-serif;
-      color: rgba(27, 80, 97, 0.968);
+      color: rgba(255, 255, 255, 0.968);
       font-weight: 600;
       margin-bottom: 80px;
     }
@@ -299,7 +299,7 @@ p{
         border-radius: 12px;
         border-bottom: 1px solid #a7bcff;
         &::placeholder {
-          color: rgb(175, 175, 175);
+          color: rgb(0, 0, 0);
         }
       }
       div {
@@ -322,7 +322,7 @@ p{
   }
 }
 .dlog {
-  background: url("./img/backgr.png") no-repeat;
+  background: url("./img/backgro.png") no-repeat;
   background-attachment: fixed;
   background-size: cover;
   width: 100%;
@@ -350,7 +350,7 @@ p{
       left: 50%;
       transform: translate(-50%, -50%);
       line-height: 1.4;
-      background: rgb(141, 213, 226);
+      background: #595aab;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       width: 400px;
@@ -362,7 +362,7 @@ p{
         margin-left: 20px;
         margin-top: 20px;
         font-size: 22px;
-        color: rgba(27, 80, 97, 0.968);
+        color: rgba(255, 255, 255, 0.968);
       }
       input {
         margin-top: 20px;
@@ -372,7 +372,7 @@ p{
         width: 250px;
         outline: none;
         border-radius: 12px;
-        border-bottom: 1px solid #a7bcff;
+        border-bottom: 1px solid #000000;
       }
       button {
         margin-top: 30px;
@@ -396,7 +396,7 @@ p{
     width: 95%;
     background: transparent;
     border-radius: 12px;
-    backdrop-filter: blur(300px);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -404,7 +404,7 @@ p{
     span {
       font-size: 50px;
       font-family: "Inter", sans-serif;
-      color: rgba(27, 80, 97, 0.968);
+      color: rgba(255, 255, 255, 0.968);
       font-weight: 600;
       margin-bottom: 80px;
     }
@@ -421,7 +421,7 @@ p{
         border-radius: 12px;
         border-bottom: 1px solid #a7bcff;
         &::placeholder {
-          color: rgb(175, 175, 175);
+          color: rgb(0, 0, 0);
         }
       }
 
@@ -445,7 +445,7 @@ p{
   }
 }
 .phome {
-  background: url("./img/backgr.png") no-repeat;
+  background: url("./img/backgro.png") no-repeat;
   background-attachment: fixed;
   background-size: cover;
   width: 100%;
@@ -635,7 +635,7 @@ p{
     width: 95%;
     background: transparent;
     border-radius: 12px;
-    backdrop-filter: blur(300px);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -643,7 +643,7 @@ p{
     span {
       font-size: 40px;
       font-family: "Inter", sans-serif;
-      color: rgba(27, 80, 97, 0.968);
+      color: rgba(255, 255, 255, 0.968);
       font-weight: 600;
     }
     .buttons {
@@ -683,7 +683,7 @@ p{
   }
 }
 .dhome {
-  background: url("./img/backgr.png") no-repeat;
+  background: url("./img/backgro.png") no-repeat;
   background-attachment: fixed;
   background-size: cover;
   width: 100%;
@@ -763,7 +763,7 @@ p{
           border-radius: 12px;
           border-bottom: 1px solid #a7bcff;
           &::placeholder {
-            color: rgb(175, 175, 175);
+            color: rgb(0, 0, 0);
           }
         }
         button {
@@ -920,7 +920,7 @@ p{
     width: 95%;
     background: transparent;
     border-radius: 12px;
-    backdrop-filter: blur(300px);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -928,7 +928,7 @@ p{
     span {
       font-size: 40px;
       font-family: "Inter", sans-serif;
-      color: rgba(27, 80, 97, 0.968);
+      color: rgba(255, 255, 255, 0.968);
       font-weight: 600;
     }
     .buttons {
@@ -981,7 +981,7 @@ p{
   }
 }
 .records {
-  background: url("./img/backgr.png") no-repeat;
+  background: url("./img/backgro.png") no-repeat;
   background-attachment: fixed;
   background-size: cover;
   width: 100%;
@@ -994,7 +994,7 @@ p{
     width: 95%;
     background: transparent;
     border-radius: 12px;
-    backdrop-filter: blur(300px);
+    backdrop-filter: blur(30px);
     display: flex;
     // align-items: center;
     // justify-content: center;
@@ -1028,7 +1028,7 @@ p{
         font-size: 24px;
         width:300px;
         font-family: "Inter", sans-serif;
-        color: rgba(27, 80, 97, 0.968);
+        color: rgba(255, 255, 255, 0.968);
         font-weight: 600;
       }
       .high{
@@ -1041,7 +1041,7 @@ p{
         border-radius: 12px;
         border-bottom: 1px solid #a7bcff;
         &::placeholder {
-          color: rgb(175, 175, 175);
+          color: rgb(0, 0, 0);
         }
       }
       .low {
@@ -1054,7 +1054,7 @@ p{
         border-radius: 12px;
         border-bottom: 1px solid #a7bcff;
         &::placeholder {
-          color: rgb(175, 175, 175);
+          color: rgb(0, 0, 0);
         }
       }
       

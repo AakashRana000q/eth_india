@@ -6,7 +6,7 @@ const Signup = () => {
   return (
     <div className="sign">
       <div className="container">
-        <span className="welcome">Global Health Records</span>
+        <span className="welcome">Decentralizing the Healthcare Network</span>
         <div className="buttons">
           <div className="one">
             <button className="signup">Sign Up</button>

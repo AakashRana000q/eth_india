@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+/src/utils/signedIn.jsx
+/src/utils/signedInd.jsx
 
 # production
 /build

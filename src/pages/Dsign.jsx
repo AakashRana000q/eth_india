@@ -30,7 +30,7 @@ const Dsign = () => {
 
     try {
       console.log(dict);
-      const response = await fetch('http://127.0.0.1:8000/newdoc/', {
+      const response = await fetch(`${process.env.REACT_APP_URL}${dict.function}`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'same-origin',

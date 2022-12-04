@@ -43,7 +43,7 @@ const Psign = () => {
     };
     try {
       console.log(dict2);
-      const response = await fetch('http://127.0.0.1:8000/newpatient/', {
+      const response = await fetch(`${process.env.REACT_APP_URL}${dict2.function}`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'same-origin',
